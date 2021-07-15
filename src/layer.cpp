@@ -1,5 +1,5 @@
 #include "layer.h"
-#include <iostream>
+
 
 nn::Layer::Layer(){}
 
@@ -21,7 +21,6 @@ nn::Conv2D::Conv2D(int filter, int channel, int kernal_w, int kernal_h, int stri
 }
 
 void nn::Conv2D::magic_train(){
-    //std::cout << "magic_train" << std::endl;
     random_tensor_4d(this->weight);
     random_tensor_1d(this->bias);
 }

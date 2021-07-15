@@ -1,5 +1,5 @@
 #include "tensor.h"
-#include <iostream>
+
 tensor nn::new_tensor(int channel, int height, int width){
     tensor x(channel, std::vector<std::vector<double> >(height, std::vector<double>(width)));
     //tensor x(height, std::vector<double>(width));

@@ -1,7 +1,5 @@
 #include <iostream>
-//#include <omp.h>
 #include "model.h"
-#include "tensor.h"
 
 void print_tensor(tensor& x);
 
@@ -11,9 +9,10 @@ int main()
 
     m.add_layer( new nn::Conv2D(4, 1, 3, 3) );
     m.add_layer( new nn::ReLU() );
+    m.add_layer( new nn::MaxPooling2D(2) );
     m.add_layer( new nn::Conv2D(1, 4, 3, 3, 1, 1, nn::SAME) );
     m.add_layer( new nn::ReLU() );
-    //m.add_layer( new nn::MaxPooling2D(2) );
+    m.add_layer( new nn::MaxPooling2D(2) );
 
     // backward not ready yet. unable to train
     // using magic_train to assign random weights to each layer

@@ -1,6 +1,8 @@
-//#include <vector>
+#include <vector>
+#include <omp.h>
 #include "layer.h"
 #include "tensor.h"
+
 
 namespace nn{
     class Model{
