@@ -7,7 +7,7 @@ nn::Layer::Layer(){}
 
 void nn::Layer::magic_train(){}
 
-tensor nn::Layer::forward(tensor &input){return input;}
+tensor nn::Layer::forward(const tensor &input) {return input;}
 
 
 nn::Conv2D::Conv2D(int filter, int kernal_w, int kernal_h){
@@ -21,7 +21,7 @@ void nn::Conv2D::magic_train(){
 
 }
 
-tensor nn::Conv2D::forward(tensor &input){
+tensor nn::Conv2D::forward(const tensor &input) {
     return input;
 }
 
@@ -32,11 +32,11 @@ nn::MaxPooling2D::MaxPooling2D(int w, int h, int s){
     this->stride = s == -1 ? w : s;
 }
 
-tensor nn::MaxPooling2D::forward(tensor &input){
+tensor nn::MaxPooling2D::forward(const tensor &input) {
     int out_channel = input.size();
     int out_height = (input[0].size() - this->height) / this->stride + 1;
     int out_width = (input[0][0].size() - this->width) / this->stride + 1;
-    tensor out_tensor = new_tensor(out_channel, out_height, out_width);
+    this->layer_out = new_tensor(out_channel, out_height, out_width);
 
     for(int i = 0; i < out_channel; ++i){ //channel
          for(int j = 0; j < out_height; ++j){ // height
@@ -45,9 +45,19 @@ tensor nn::MaxPooling2D::forward(tensor &input){
                 int x = j * this->stride, y = k * this->stride;
                 for(int m = x; m < x + this->height; ++m)
                     for(int n = y; n < y + this->height; ++n)
-                        out_tensor[i][j][k] = std::max(out_tensor[i][j][k], input[i][m][n]);
+                        this->layer_out[i][j][k] = std::max(this->layer_out[i][j][k], input[i][m][n]);
             } 
         }
     }
-    return out_tensor;
+    return this->layer_out;
+}
+
+tensor nn::ReLU::forward(const tensor &input) {
+    this->layer_out = new_tensor(input.size(), input[0].size(), input[0][0].size());
+    for(int i = 0; i < input.size(); ++i)
+        for(int j = 0; j < input[0].size(); ++j)
+            for(int k = 0; k < input[0][0].size(); ++k)
+                this->layer_out[i][j][k] = input[i][j][k] < 0 ? 0 : input[i][j][k];
+                
+    return this->layer_out;
 }

@@ -24,7 +24,8 @@ void nn::Model::magic_train(){
 
 tensor nn::Model::predic(const tensor &x){
     tensor now = x;
-    for(int i = 0; i < this->layers.size(); ++i)
+    for(int i = 0; i < this->layers.size(); ++i){
         now = layers[i]->forward(now);
+    }
     return now;
 }

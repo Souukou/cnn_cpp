@@ -12,7 +12,7 @@ void nn::random_tensor(tensor &x){
     int width = x[0][0].size();
     //std::cout << col << "  " << row << std::endl;
     std::default_random_engine e;
-	std::uniform_real_distribution<double> u(0, 1);
+	std::uniform_real_distribution<double> u(-1, 1);
     e.seed(time(0));
     for(int i = 0; i < channel; ++i)
         for(int j = 0; j < height; ++j)

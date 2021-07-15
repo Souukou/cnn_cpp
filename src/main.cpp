@@ -7,14 +7,14 @@
 int main()
 {
     nn::Model m = nn::Model();
-    nn::Layer *layer1 = new nn::Conv2D(10, 3, 3);
-    nn::Layer *layer2 = new nn::MaxPooling2D(2);
-    m.add_layer(layer1);    
-    m.add_layer(layer2);
 
-    // no backward, using magic_train to assign random weights to each layer
+    m.add_layer( new nn::Conv2D(10, 3, 3) );
+    m.add_layer( new nn::ReLU() );    
+    //m.add_layer( new nn::MaxPooling2D(2) );
+
+    // backward not ready yet. unable to train
+    // using magic_train to assign random weights to each layer
     // m.train(0.0001);
-
     m.magic_train();
 
     // test input
