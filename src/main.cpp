@@ -14,24 +14,33 @@ int main()
 
     // no backward, using magic_train to assign random weights to each layer
     // m.train(0.0001);
+
     m.magic_train();
 
     // test input
-    tensor test = nn::new_tensor(1, 128, 28);
+    tensor test = nn::new_tensor(1, 14, 14);
+
     nn::random_tensor(test);
 
-    for(int i = 0; i < test.size(); ++i){
-        for(int j = 0; j < test[0].size(); ++j){
-            for(int k = 0; k < test[0][0].size(); ++k)
-                std::cout << test[i][j][k] << " ";
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-    }
-            
-    
+    // for(int i = 0; i < test.size(); ++i){
+    //     for(int j = 0; j < test[0].size(); ++j){
+    //         for(int k = 0; k < test[0][0].size(); ++k)
+    //             std::cout << test[i][j][k] << " ";
+    //         std::cout << std::endl;
+    //     }
+    //     std::cout << std::endl;
+    // }
 
-    //tensor result = m.predic(test);
+    tensor result = m.predic(test);
+
+    // for(int i = 0; i < result.size(); ++i){
+    //     for(int j = 0; j < result[0].size(); ++j){
+    //         for(int k = 0; k < result[0][0].size(); ++k)
+    //             std::cout << result[i][j][k] << " ";
+    //         std::cout << std::endl;
+    //     }
+    //     std::cout << std::endl;
+    // }
 
 
     return 0;
