@@ -25,11 +25,11 @@ int main()
     nn::random_tensor_4d(test);
 
     //print_tensor(test[0]);
-
+    double start = omp_get_wtime();
     tensor_4d result = m.predic(test);
-
+    double end = omp_get_wtime();
     print_tensor(result[0]);
-
+    std::cout << "Time Used: " << end - start << std::endl;
     return 0;
 }
 
