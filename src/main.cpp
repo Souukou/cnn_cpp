@@ -17,17 +17,21 @@ int main()
     m.magic_train();
 
     // test input
-    tensor test = nn::new_tensor(128, 28);
+    tensor test = nn::new_tensor(1, 128, 28);
     nn::random_tensor(test);
 
-    // for(int i = 0; i < test.size(); ++i){
-    //     for(int j = 0; j < test[0].size(); ++j)
-    //         std::cout << test[i][j] << " ";
-    //     std::cout<<std::endl;
-    // }
+    for(int i = 0; i < test.size(); ++i){
+        for(int j = 0; j < test[0].size(); ++j){
+            for(int k = 0; k < test[0][0].size(); ++k)
+                std::cout << test[i][j][k] << " ";
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+            
     
 
-    tensor result = m.predic(test);
+    //tensor result = m.predic(test);
 
 
     return 0;

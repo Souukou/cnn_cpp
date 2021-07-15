@@ -1,20 +1,22 @@
 #include "tensor.h"
 #include <iostream>
-tensor nn::new_tensor(int height, int width){
-    //tensor x(channel, std::vector<std::vector<int> >(height, std::vector<int>(width)));
-    tensor x(height, std::vector<double>(width));
+tensor nn::new_tensor(int channel, int height, int width){
+    tensor x(channel, std::vector<std::vector<double> >(height, std::vector<double>(width)));
+    //tensor x(height, std::vector<double>(width));
     return x;
 }
 
 void nn::random_tensor(tensor &x){
-    int col = x.size();
-    int row = x[0].size();
+    int channel = x.size();
+    int height = x[0].size();
+    int width = x[0][0].size();
     //std::cout << col << "  " << row << std::endl;
     std::default_random_engine e;
 	std::uniform_real_distribution<double> u(0, 1);
     e.seed(time(0));
-    for(int i = 0; i < col; ++i)
-        for(int j = 0; j < row; ++j)
-            x[i][j] = u(e);
+    for(int i = 0; i < channel; ++i)
+        for(int j = 0; j < height; ++j)
+            for(int k = 0; k < width; ++k)
+                x[i][j][k] = u(e);
         
 }

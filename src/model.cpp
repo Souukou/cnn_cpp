@@ -22,7 +22,7 @@ void nn::Model::magic_train(){
         layers[i]->magic_train();
 }
 
-tensor nn::Model::predic(const std::vector<tensor> &x){
+tensor nn::Model::predic(const tensor &x){
     tensor now = x;
     for(int i = 0; i < this->layers.size(); ++i)
         now = layers[i]->forward(now);
