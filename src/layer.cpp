@@ -29,7 +29,7 @@ tensor nn::Conv2D::forward(const tensor &input) {
     int out_channel = input.size();
     int out_width = this->padding == SAME ? input[0].size() : input[0].size() - this->kernal_w + 1;
     int out_height =  this->padding == SAME ? input[0][0].size() : input[0][0].size() - this->kernal_h + 1;
-    this->layer_out = new_tensor(filter, out_width, out_height);
+    tensor layer_out = new_tensor(filter, out_width, out_height);
 
     if (this->padding == VALID){ // no padding
         for(int i = 0; i < input[0].size() - kernal_w; i += this->stride_w)
@@ -38,7 +38,7 @@ tensor nn::Conv2D::forward(const tensor &input) {
                     for(int c = 0; c < input.size(); ++c)
                         for(int m = 0; m < this->kernal_w; ++m)
                             for(int n = 0; n < this->kernal_h; ++n)
-                                this->layer_out[f][i][j] += input[c][i+m][j+n] * weight[f][c][m][n];
+                                layer_out[f][i][j] += input[c][i+m][j+n] * weight[f][c][m][n];
     }
     else if (this->padding == SAME){  // pad to same size
         for(int i = 0; i < input[0].size(); i += this->stride_w)
@@ -50,13 +50,13 @@ tensor nn::Conv2D::forward(const tensor &input) {
                                 if (i + m >= input[0].size() || j + n > input[0][0].size())
                                     continue;
                                 else
-                                    this->layer_out[f][i][j] += input[c][i+m][j+n] * weight[f][c][m][n];
+                                    layer_out[f][i][j] += input[c][i+m][j+n] * weight[f][c][m][n];
     }
     for(int f = 0; f < this->filter; ++f)
-        for(int i = 0; i < this->layer_out[0].size(); i++)
-            for(int j = 0; j < this->layer_out[0][0].size(); j++)
-                this->layer_out[f][i][j] += this->bias[f];
-    return this->layer_out;
+        for(int i = 0; i < layer_out[0].size(); i++)
+            for(int j = 0; j < layer_out[0][0].size(); j++)
+                layer_out[f][i][j] += this->bias[f];
+    return layer_out;
 }
 
 
@@ -70,7 +70,7 @@ tensor nn::MaxPooling2D::forward(const tensor &input) {
     int out_channel = input.size();
     int out_width = (input[0].size() - this->width) / this->stride + 1;
     int out_height = (input[0][0].size() - this->height) / this->stride + 1;
-    this->layer_out = new_tensor(out_channel, out_width, out_height);
+    tensor layer_out = new_tensor(out_channel, out_width, out_height);
 
     for(int i = 0; i < out_channel; ++i){ //channel
          for(int j = 0; j < out_width; ++j){ // width
@@ -79,19 +79,19 @@ tensor nn::MaxPooling2D::forward(const tensor &input) {
                 int x = j * this->stride, y = k * this->stride;
                 for(int m = x; m < x + this->width; ++m)
                     for(int n = y; n < y + this->height; ++n)
-                        this->layer_out[i][j][k] = std::max(this->layer_out[i][j][k], input[i][m][n]);
+                        layer_out[i][j][k] = std::max(layer_out[i][j][k], input[i][m][n]);
             } 
         }
     }
-    return this->layer_out;
+    return layer_out;
 }
 
 tensor nn::ReLU::forward(const tensor &input) {
-    this->layer_out = new_tensor(input.size(), input[0].size(), input[0][0].size());
+    tensor layer_out = new_tensor(input.size(), input[0].size(), input[0][0].size());
     for(int i = 0; i < input.size(); ++i)
         for(int j = 0; j < input[0].size(); ++j)
             for(int k = 0; k < input[0][0].size(); ++k)
-                this->layer_out[i][j][k] = input[i][j][k] < 0 ? 0 : input[i][j][k];
+                layer_out[i][j][k] = input[i][j][k] < 0 ? 0 : input[i][j][k];
 
-    return this->layer_out;
+    return layer_out;
 }

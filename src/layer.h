@@ -12,7 +12,7 @@ namespace nn{
         Layer();
         virtual void magic_train();
         virtual tensor forward(const tensor &input);
-        tensor layer_out;
+        //tensor layer_out;
     };
 
 
