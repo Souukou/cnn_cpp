@@ -2,6 +2,10 @@
 #include "tensor.h"
 
 namespace nn{
+    typedef enum{
+        VALID, SAME
+    } Padding;
+
 
     class Layer{
     public:
@@ -14,12 +18,13 @@ namespace nn{
 
     class Conv2D : public Layer{
     public:
-        Conv2D(int filter, int channel, int kernal_w, int kernal_h);
+        Conv2D(int filter, int channel, int kernal_w, int kernal_h, int stride_w = 1, int stride_h = 1, Padding padding=VALID);
         ~Conv2D();
         virtual void magic_train();
         virtual tensor forward(const tensor &input);
     private:
-        int filter, channel, kernal_w, kernal_h;
+        int filter, channel, kernal_w, kernal_h, stride_w, stride_h;
+        Padding padding;
         std::vector<tensor> weight;
         std::vector<double> bias;
     };
