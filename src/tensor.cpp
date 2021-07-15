@@ -6,6 +6,11 @@ tensor nn::new_tensor(int channel, int height, int width){
     return x;
 }
 
+tensor_4d nn::new_tensor_4d(int filter, int channel, int height, int width){
+    tensor_4d x( filter, std::vector<std::vector<std::vector<double> > >(channel, std::vector<std::vector<double> >(height, std::vector<double>(width) ) ) );
+    return x;
+}
+
 void nn::random_tensor(tensor &x){
     int channel = x.size();
     int height = x[0].size();

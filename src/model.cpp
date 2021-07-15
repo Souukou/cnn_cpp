@@ -14,7 +14,7 @@ void nn::Model::add_layer(Layer *x){
 
 void nn::Model::train(double learning_rate){
     // backward
-
+    // not ready yet. use magic_train for testing
 }
 
 void nn::Model::magic_train(){

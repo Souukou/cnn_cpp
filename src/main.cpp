@@ -8,7 +8,7 @@ int main()
 {
     nn::Model m = nn::Model();
 
-    m.add_layer( new nn::Conv2D(10, 3, 3) );
+    m.add_layer( new nn::Conv2D(10, 1, 3, 3) );
     m.add_layer( new nn::ReLU() );    
     //m.add_layer( new nn::MaxPooling2D(2) );
 

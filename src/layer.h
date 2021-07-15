@@ -14,13 +14,14 @@ namespace nn{
 
     class Conv2D : public Layer{
     public:
-        Conv2D(int filter, int kernal_w, int kernal_h);
+        Conv2D(int filter, int channel, int kernal_w, int kernal_h);
         ~Conv2D();
         virtual void magic_train();
         virtual tensor forward(const tensor &input);
     private:
-        int filter, kernal_w, kernal_h;
-        std::vector <tensor> array;
+        int filter, channel, kernal_w, kernal_h;
+        std::vector<tensor> weight;
+        std::vector<double> bias;
     };
 
 
