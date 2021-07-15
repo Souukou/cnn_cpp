@@ -9,7 +9,8 @@ namespace nn{
         void add_layer(Layer *x);
         void train(double learning_rate);
         void magic_train();
-        tensor predic(const tensor &x);
+        tensor_4d predic(const tensor_4d &x);
+        tensor_4d result;
     private:
         std::vector<Layer*> layers;
 

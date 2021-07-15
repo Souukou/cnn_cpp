@@ -21,15 +21,15 @@ int main()
     m.magic_train();
 
     // test input
-    tensor test = nn::new_tensor(1, 8, 8);
+    tensor_4d test = nn::new_tensor_4d(10000, 1, 16, 16);
 
-    nn::random_tensor(test);
+    nn::random_tensor_4d(test);
 
-    print_tensor(test);
+    //print_tensor(test[0]);
 
-    tensor result = m.predic(test);
+    tensor_4d result = m.predic(test);
 
-    print_tensor(result);
+    print_tensor(result[0]);
 
     return 0;
 }

@@ -1,11 +1,6 @@
 #include "model.h"
-#include <iostream>
-using namespace std;
-nn::Model::Model(){
 
-
-    
-}
+nn::Model::Model(){}
 
 
 void nn::Model::add_layer(Layer *x){
@@ -22,10 +17,13 @@ void nn::Model::magic_train(){
         layers[i]->magic_train();
 }
 
-tensor nn::Model::predic(const tensor &x){
-    tensor now = x;
-    for(int i = 0; i < this->layers.size(); ++i){
-        now = layers[i]->forward(now);
+tensor_4d nn::Model::predic(const tensor_4d &x){
+    for(int t = 0; t < x.size(); ++t){
+        tensor now = x[t];
+        for(int i = 0; i < this->layers.size(); ++i){
+            now = layers[i]->forward(now);
+        }
+        result.push_back(now);
     }
-    return now;
+    return this->result;
 }
