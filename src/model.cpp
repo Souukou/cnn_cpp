@@ -17,10 +17,10 @@ void nn::Model::magic_train(){
         layers[i]->magic_train();
 }
 
-tensor_4d nn::Model::predic(const tensor_4d &x){
+tensor_4d nn::Model::predic(const tensor_4d &x, int threads){
     this->result = std::vector<tensor>(x.size());
     int t;
-    #pragma omp parallel for
+    #pragma omp parallel for num_threads(threads)
     for(t = 0; t < x.size(); ++t){
         tensor now = x[t];
         for(int i = 0; i < this->layers.size(); ++i){

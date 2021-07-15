@@ -25,11 +25,27 @@ int main()
     nn::random_tensor_4d(test);
 
     //print_tensor(test[0]);
+
+    // auto threads
     double start = omp_get_wtime();
     tensor_4d result = m.predic(test);
     double end = omp_get_wtime();
     print_tensor(result[0]);
-    std::cout << "Time Used: " << end - start << std::endl;
+    std::cout << "Auto Threads Time Used: " << end - start << std::endl;
+
+    // two threads
+    start = omp_get_wtime();
+    m.predic(test, 2);
+    end = omp_get_wtime();
+    std::cout << "Two Threads Time Used: " << end - start << std::endl;
+
+    // single threads (serialize)
+    start = omp_get_wtime();
+    m.predic(test, 1);
+    end = omp_get_wtime();
+    std::cout << "Serialize Time Used: " << end - start << std::endl;
+
+
     return 0;
 }
 
