@@ -1,8 +1,18 @@
 #include <iostream>
 #include "model.h"
-
+#define INTEL
+#ifdef INTEL
+#include <mkl.h>
+#endif
 void print_tensor(tensor& x);
-
+double get_time(){
+#ifdef INTEL
+    return dsecnd();
+#endif
+#ifndef INTEL
+    return omp_get_wtime();
+#endif
+}
 int main()
 {
     nn::Model m = nn::Model();
@@ -26,24 +36,32 @@ int main()
 
     //print_tensor(test[0]);
 
+    double start, end;
+    int LOOP_COUNT = 5;
+    tensor_4d result;
     // auto threads
-    double start = omp_get_wtime();
-    tensor_4d result = m.predic(test);
-    double end = omp_get_wtime();
+
+    start = get_time();
+    for (int i=0; i<LOOP_COUNT; ++i)
+         result= m.predic(test);
+    end = get_time();
     print_tensor(result[0]);
-    std::cout << "Auto Threads Time Used: " << end - start << std::endl;
+
+    std::cout << "Auto Threads Time Used: " << (end - start) / LOOP_COUNT << std::endl;
 
     // two threads
-    start = omp_get_wtime();
-    m.predic(test, 2);
-    end = omp_get_wtime();
-    std::cout << "Two Threads Time Used: " << end - start << std::endl;
+    start = get_time();
+    for (int i=0; i<LOOP_COUNT; ++i)
+        m.predic(test, 2);
+    end = get_time();
+    std::cout << "Two Threads Time Used: " << (end - start) / LOOP_COUNT << std::endl;
 
     // single threads (serialize)
-    start = omp_get_wtime();
-    m.predic(test, 1);
-    end = omp_get_wtime();
-    std::cout << "Serialize Time Used: " << end - start << std::endl;
+    start = get_time();
+    for (int i=0; i<LOOP_COUNT; ++i)
+        m.predic(test, 1);
+    end = get_time();
+    std::cout << "Serialize Time Used: " << (end - start) / LOOP_COUNT << std::endl;
 
 
     return 0;
