@@ -9,7 +9,7 @@
                 "-g",
                 //"${file}",
                 //"${fileDirname}/*",
-                "${workspaceFolder}/src/*",
+                "${workspaceFolder}/src/*.cpp",
                 "-o",
                 "${workspaceFolder}/build/main"
             ],
