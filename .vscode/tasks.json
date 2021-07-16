@@ -8,9 +8,10 @@
                 "-fopenmp",
                 "-g",
                 //"${file}",
-                "${fileDirname}/*",
+                //"${fileDirname}/*",
+                "${workspaceFolder}/src/*",
                 "-o",
-                "${fileDirname}/../build/${fileBasenameNoExtension}"
+                "${workspaceFolder}/build/main"
             ],
             "options": {
                 "cwd": "${fileDirname}"
