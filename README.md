@@ -48,11 +48,7 @@ g++ -fopenmp src/*.cpp -o build/main
 ### 运行
 
 ```
-./build/main <n> <t> <v|q>
-   n:   number of inputs
-   t:   number of threads, default auto thread
-  'v':  verbose, print first tensor
-  'q':  quiet
+./build/main
 ```
 
 ## 主要实现的功能
