@@ -3,7 +3,7 @@
 
 nn::Layer::Layer(){}
 
-void nn::Layer::magic_train(){}
+void nn::Layer::magic_train(int flag){}
 
 tensor nn::Layer::forward(const tensor &input) {return input;}
 
@@ -20,25 +20,34 @@ nn::Conv2D::Conv2D(int filter, int channel, int kernal_w, int kernal_h, int stri
     this->bias = std::vector<double>(filter);
 }
 
-void nn::Conv2D::magic_train(){
-    random_tensor_4d(this->weight);
-    random_tensor_1d(this->bias);
+void nn::Conv2D::magic_train(int flag){
+    if (flag == 0){
+        random_tensor_4d(this->weight);
+        random_tensor_1d(this->bias);
+    }
+    if (flag == 1){  // for test case 1
+        std::vector<std::vector<double> > the_weight(3, std::vector<double>(3));
+        the_weight = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+        for(int i = 0; i < 4; ++i)
+            this->weight[i][0] = the_weight;
+        this->bias = {1, 2, -5, -80};
+    }
 }
 
 tensor nn::Conv2D::forward(const tensor &input) {
     int out_channel = input.size();
-    int out_width = this->padding == SAME ? input[0].size() : input[0].size() - this->kernal_w + 1;
-    int out_height =  this->padding == SAME ? input[0][0].size() : input[0][0].size() - this->kernal_h + 1;
+    int out_width = this->padding == SAME ? input[0].size() : (input[0].size() - this->kernal_w) / this->stride_w + 1;
+    int out_height =  this->padding == SAME ? input[0][0].size() : (input[0][0].size() - this->kernal_h) / this->stride_h + 1;
     tensor layer_out = new_tensor(filter, out_width, out_height);
 
     if (this->padding == VALID){ // no padding
-        for(int i = 0; i < input[0].size() - kernal_w; i += this->stride_w)
-            for(int j = 0; j < input[0][0].size() - kernal_h; j += this->stride_h)
+        for(int i = 0; i < input[0].size() - kernal_w + 1; i += this->stride_w)
+            for(int j = 0; j < input[0][0].size() - kernal_h + 1; j += this->stride_h)
                 for(int f = 0; f < this->filter; ++f)
                     for(int c = 0; c < input.size(); ++c)
                         for(int m = 0; m < this->kernal_w; ++m)
                             for(int n = 0; n < this->kernal_h; ++n)
-                                layer_out[f][i][j] += input[c][i+m][j+n] * weight[f][c][m][n];
+                                layer_out[f][i / this->stride_w][j / this->stride_h] += input[c][i+m][j+n] * weight[f][c][m][n];
     }
     else if (this->padding == SAME){  // pad to same size
         for(int i = 0; i < input[0].size(); i += this->stride_w)

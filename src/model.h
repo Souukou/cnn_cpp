@@ -10,7 +10,7 @@ namespace nn{
         Model();
         void add_layer(Layer *x);
         void train(double learning_rate);
-        void magic_train();
+        void magic_train(int flag=0);
         tensor_4d predic(const tensor_4d &x, int threads = 0);
         tensor_4d result;
     private:

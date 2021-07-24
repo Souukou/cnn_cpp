@@ -10,7 +10,7 @@ namespace nn{
     class Layer{
     public:
         Layer();
-        virtual void magic_train();
+        virtual void magic_train(int flag);
         virtual tensor forward(const tensor &input);
         //tensor layer_out;
     };
@@ -20,7 +20,7 @@ namespace nn{
     public:
         Conv2D(int filter, int channel, int kernal_w, int kernal_h, int stride_w = 1, int stride_h = 1, Padding padding=VALID);
         ~Conv2D();
-        virtual void magic_train();
+        virtual void magic_train(int flag);
         virtual tensor forward(const tensor &input);
     private:
         int filter, channel, kernal_w, kernal_h, stride_w, stride_h;

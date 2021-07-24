@@ -12,9 +12,9 @@ void nn::Model::train(double learning_rate){
     // not ready yet. use magic_train for testing
 }
 
-void nn::Model::magic_train(){
+void nn::Model::magic_train(int flag){
     for(int i = 0; i < this->layers.size(); ++i)
-        layers[i]->magic_train();
+        layers[i]->magic_train(flag);
 }
 
 tensor_4d nn::Model::predic(const tensor_4d &x, int threads){
