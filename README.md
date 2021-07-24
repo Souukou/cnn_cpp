@@ -117,10 +117,21 @@ Intel i3-8100 4C/4T
    | 10000  | 0.2486 | 0.1386 | 1.79 | 0.0779 | 3.19 |
    | 100000 | 2.5676 | 1.3932 | 1.84 | 0.7535 | 3.40 |
 
-## TODO
+4. GFlops计算
 
+   理论最大值 17.55GFlop/sec 
+   
+   （来源：https://setiathome.berkeley.edu/cpu_list.php#:~:text=Intel(R)%20Core(TM)%20i3-8100,17.55 ）
 
-3. gflops计算
+   使用Intel编译器的情况下，测试结果如下
 
-4. 添加conv2d_fused
+   ```
+   Test Case 6: Performance Test
+   1 Thread:
+   Time: 0.37781  GFlop: 0.59804   GFlop/s: 1.58291
+   1 Thread:
+   Time: 0.220404  GFlop: 0.59804   GFlop/s: 2.71338
+   1 Thread:
+   Time: 0.133287  GFlop: 0.59804   GFlop/s: 4.48687
+   ```
 

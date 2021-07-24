@@ -116,32 +116,44 @@ void T6(){
     // m.train(0.0001);
     m.magic_train();
     // test input
-    tensor_4d test_tensor = nn::new_tensor_4d(1000, 1, 28, 28);
+    tensor_4d test_tensor = nn::new_tensor_4d(10000, 1, 28, 28);
     nn::random_tensor_4d(test_tensor);
 
     double start, end;
     int LOOP_COUNT = 5;
+    double gflop, time_avg;
     tensor_4d result;
 
+    gflop = 10000*((2*9)*28*28*4 + 28*28*4 + 28*4 + 27*4) * 1E-9;
 
     start = get_time();
     for (int i=0; i<LOOP_COUNT; ++i)
-         result= m.predic(test_tensor, 1);
+        result= m.predic(test_tensor, 1);
     end = get_time();
-    std::cout << "1 Thread Time Used: " << (end - start) / LOOP_COUNT << std::endl;
+
+    time_avg =  (end - start) / LOOP_COUNT;
+    std::cout << "1 Thread:" << std::endl << 
+        "Time: " << time_avg << "  GFlop: " << gflop << "   GFlop/s: " << gflop/ time_avg << std::endl;
 
     start = get_time();
     for (int i=0; i<LOOP_COUNT; ++i)
          result= m.predic(test_tensor, 2);
     end = get_time();
-    std::cout << "2 Threads Time Used: " << (end - start) / LOOP_COUNT << std::endl;
+    time_avg =  (end - start) / LOOP_COUNT;
+    std::cout << "1 Thread:" << std::endl << 
+        "Time: " << time_avg << "  GFlop: " << gflop << "   GFlop/s: " << gflop/ time_avg << std::endl;
+
 
     start = get_time();
     for (int i=0; i<LOOP_COUNT; ++i)
          result= m.predic(test_tensor, 4);
     end = get_time();
-    std::cout << "4 Threads Time Used: " << (end - start) / LOOP_COUNT << std::endl;
+    time_avg =  (end - start) / LOOP_COUNT;
+    std::cout << "1 Thread:" << std::endl << 
+        "Time: " << time_avg << "  GFlop: " << gflop << "   GFlop/s: " << gflop/ time_avg << std::endl;
 
+    // Test with I3-8100, 4C4T, 17.55GFlop/sec in theory
+    // https://setiathome.berkeley.edu/cpu_list.php#:~:text=Intel(R)%20Core(TM)%20i3-8100,17.55
 }
 
 int main(int argc, char* argv[])
