@@ -140,7 +140,7 @@ void T6(){
          result= m.predic(test_tensor, 2);
     end = get_time();
     time_avg =  (end - start) / LOOP_COUNT;
-    std::cout << "1 Thread:" << std::endl << 
+    std::cout << "2 Thread:" << std::endl << 
         "Time: " << time_avg << "  GFlop: " << gflop << "   GFlop/s: " << gflop/ time_avg << std::endl;
 
 
@@ -149,7 +149,7 @@ void T6(){
          result= m.predic(test_tensor, 4);
     end = get_time();
     time_avg =  (end - start) / LOOP_COUNT;
-    std::cout << "1 Thread:" << std::endl << 
+    std::cout << "4 Thread:" << std::endl << 
         "Time: " << time_avg << "  GFlop: " << gflop << "   GFlop/s: " << gflop/ time_avg << std::endl;
 
     // Test with I3-8100, 4C4T, 17.55GFlop/sec in theory
